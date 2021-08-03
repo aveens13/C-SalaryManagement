@@ -7,6 +7,7 @@
 // and ankit changed here xD
 // Sulav commit here
 // nishit ko comment
+//aba chai push garna aayo
 float interest_rate=0.06;
 void delay(){
     int i,j;
