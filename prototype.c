@@ -9,6 +9,7 @@
 // nishit ko comment
 //aba chai push garna aayo
 //again push
+//aba hunxa?
 float interest_rate=0.06;
 void delay(){
     int i,j;
