@@ -3,6 +3,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include<conio.h>
+// I changed here 
 float interest_rate=0.06;
 void delay(){
     int i,j;
