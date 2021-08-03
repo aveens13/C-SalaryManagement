@@ -6,6 +6,7 @@
 // I changed here 
 // and ankit changed here xD
 // Sulav commit here
+// nishit ko comment
 float interest_rate=0.06;
 void delay(){
     int i,j;
