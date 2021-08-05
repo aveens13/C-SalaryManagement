@@ -34,6 +34,8 @@ void generate_payment();
 void searchEmployee();
 void editEmployee();
 void lowercase(char []);
+void logs();
+void gotoxy(int x, int y);
 
 //main
 int main()
@@ -99,7 +101,7 @@ void mainMenu(){
         //info();
         break;
     case 5:
-        //logs();
+        logs();
         break;
     case 6:
         exit(0);
@@ -304,4 +306,63 @@ void  generate_payment(){
         printf("\n\n\tWe could not found the details related to that ID Number.\n\tPlease enter ID Number again.");
         goto here;
     }
+}
+//for the coordinates placement
+void gotoxy(int x, int y){
+    COORD A;
+    A.X = x;
+    A.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),A);
+}
+//view logs
+void logs(){
+    int i;
+    system("cls");
+    gotoxy(30,4);
+    printf("===================================================================================");
+    gotoxy(50,5);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2 EMPLOYEE SALARY MANAGEMENT (LOGS)\xB2\xB2\xB2\xB2\xB2\xB2");
+    gotoxy(30,6);
+    printf("===================================================================================");
+    gotoxy(3,8);
+    printf("==================================================================================================================================");
+    gotoxy(3,9);
+    printf("ID");
+    gotoxy(10,9);
+    printf("NAME");
+    gotoxy(33,9);
+    printf("POSITION");
+    gotoxy(56,9);
+    printf("PHONE NO.");
+    gotoxy(69,9);
+    printf("SALARY");
+    gotoxy(81,9);
+    printf("BONUS");
+    gotoxy(89,9);
+    printf("TAX");
+    gotoxy(97,9);
+    printf("DEDUCTIONS");
+    gotoxy(110,9);
+    printf("NET EARNING");
+    gotoxy(3,10);
+    printf("==================================================================================================================================");
+
+    for(i=0;i<no_of_records;i++){
+        gotoxy(3,(i+11));
+    printf("%-4d\t%-20s\t%-20s\t%-10s   %-.2f\t",records[i].id,records[i].name,records[i].position,records[i].phoneno,records[i].salary);
+
+    }
+
+    gotoxy(3,(i+11));
+    printf("==================================================================================================================================\n\n");
+
+    printf("\tTOTAL NO. OF EMPLOYEE=%d\n",no_of_records);
+    gotoxy(50,(i+15));
+    printf("Press any button to return to the main menu");
+    getch();
+    mainMenu();
+
+    
+
+
 }
