@@ -4,6 +4,7 @@
 #include<stdlib.h>
 #include<conio.h>
 #include<windows.h>
+#include<ctype.h>
 float interest_rate=0.06;
 void edit();
 void details();
@@ -21,7 +22,8 @@ typedef struct
     int id,age;
     float salary,interest;
 }detail;
-
+int len;
+char name[20];
 detail a[50];
 
 int main(){
@@ -30,7 +32,7 @@ int main(){
     char name1[20],name[20] = "admin";
     char password1[10],password[10]="admin";
     p = fopen("main.txt","r");
-    int i=0,len;
+    int i=0;
     while(!feof(p)){
         fgets(a[i].name,20,p);
         fscanf(p,"\n%d",&a[i].id);
@@ -62,6 +64,9 @@ int main(){
         switch (usr_choice)
         {
         case 1:
+            strcpy(name, "");
+            system("cls");
+            printf("Enter the name of employee: ");
             details();
             break;
         case 2:
@@ -143,7 +148,8 @@ void edit(){
         break;
     }
 }
-void details(){
+
+/*void details(){
     int id,ch;
     system("cls");
     printf("\nInput the id no of the employee:");
@@ -163,7 +169,34 @@ void details(){
     printf("\nEnter any key to go to main menu. ");
     getch();
     main();
+}*/
+
+void details() {
+    char input = getch();
+    if (input == '\b'){
+        name[strlen(name)-1] = '\0';
+    }else{
+        strncat(name, &input, 1);
+    }
+    system("cls");
+    printf("Enter the name of employee: %s\n\n", name);
+    printf("\tID\t\tName\t\t\t\tPosition\tSalary\n");
+    int count = 0;
+    for (int i=0; i<len; i++){
+        char comp[20];
+        strcmp(comp, a[i].name); 
+        tolower(comp);
+        if (strstr(comp, name) != NULL){
+            printf("\t%d\t\t%-20s\t\t%.2f\t\t%.2f\n",a[i].id, a[i].name,a[i].age,a[i].salary,a[i].interest);
+        }else if (strcmp(name, "quit") == 0){
+            main();
+        }
+        count = 1;
+    }
+    details();
+
 }
+
 void deposit(int len){
     int id_no,j,res;
     FILE *fp,*fp1,*fp2;
