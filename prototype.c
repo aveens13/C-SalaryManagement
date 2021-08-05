@@ -3,13 +3,8 @@
 #include<string.h>
 #include<stdlib.h>
 #include<conio.h>
+#include<windows.h>
 float interest_rate=0.06;
-void delay(){
-    int i,j;
-    for(i=0;i<25567;i++){
-    for(j=0;j<25567;j++){}
-    }
-}
 void edit();
 void details();
 void deposit(int);
@@ -55,10 +50,10 @@ int main(){
     cp = strcmp(name,name1);
     if(cp==0){
         printf("\nProcessing");
-        delay();printf(".");
-        delay();printf(".");
-        delay();printf(".");
-        delay();printf(".");
+        Sleep(500);printf(".");
+        Sleep(500);printf(".");
+        Sleep(500);printf(".");
+        Sleep(500);printf(".");
         system("cls");
         printf("\n\tUsername and Password Bypassed\n\n\n");
         here:
@@ -111,10 +106,10 @@ void edit(){
     {
     case 1:
         printf("\nProcessing");
-        delay();printf(".");
-        delay();printf(".");
-        delay();printf(".");
-        delay();printf(".");
+        Sleep(500);printf(".");
+        Sleep(500);printf(".");
+        Sleep(500);printf(".");
+        Sleep(500);printf(".");
         p = fopen("main.txt","a");
         printf("Enter the name of employee:");
         scanf("%c",&temp); 
@@ -159,10 +154,10 @@ void details(){
             }
     }
     printf("\nProcessing");
-    delay();printf(".");
-    delay();printf(".");  
-    delay();printf(".");
-    delay();printf(".\n\n");
+    Sleep(500);printf(".");
+    Sleep(500);printf(".");  
+    Sleep(500);printf(".");
+    Sleep(500);printf(".\n\n");
 
     printf("\t\t\t\t\t\tName:%s\t\t\t\t\t\tID:%d\n\t\t\t\t\t\tAge:%d\n\t\t\t\t\t\tSalary:$%.2f\n\t\t\t\t\t\tInterest Acquired:%.2f",a[id].name,a[id].id,a[id].age,a[id].salary,a[id].interest);
     printf("\nEnter any key to go to main menu. ");
@@ -184,10 +179,10 @@ void deposit(int len){
             }
     }
     printf("\nProcessing");
-    delay();printf(".");
-    delay();printf(".");  
-    delay();printf(".");
-    delay();printf(".\n\n");
+    Sleep(500);printf(".");
+    Sleep(500);printf(".");  
+    Sleep(500);printf(".");
+    Sleep(500);printf(".\n\n");
     printf("The name of the employee is %s\n",a[id_no].name);
     printf("\nAre you sure you want to deposit to %s\n1. Yes\n2. No\n");
     scanf("%d",&res);
@@ -201,10 +196,10 @@ void deposit(int len){
         a[id_no].salary = salary+deposited_amt;
         a[id_no].interest = interest_rate * a[id_no].salary;
         printf("\nProcessing");
-        delay();printf(".");
-        delay();printf(".");  
-        delay();printf(".");
-        delay();printf(".\n\n");
+        Sleep(500);printf(".");
+        Sleep(500);printf(".");  
+        Sleep(500);printf(".");
+        Sleep(500);printf(".\n\n");
         printf("\n\t\t\t\t\t\tName: %s\n\t\t\t\t\t\tUpdated Balance: $%f",a[id_no].name,a[id_no].salary);
         fp1 = fopen("main.txt","r");
         fflush(fp1);
