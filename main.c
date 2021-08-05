@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include <conio.h>
+#include<windows.h>
 #include <ctype.h>
 
 //structure definition
@@ -20,6 +21,7 @@ char name[20];
 char real_username[20] = "admin"; //username
 char real_password[20] = "admin"; //password
 int no_of_records;
+float tax = 0.13;
 
 //function declaration
 void login();
@@ -28,6 +30,7 @@ void manageEmployees();
 void addEmployees();
 void appendToFile(employee*);
 void readFromFile();
+void generate_payment();
 void searchEmployee();
 void editEmployee();
 void lowercase(char []);
@@ -36,6 +39,8 @@ void lowercase(char []);
 int main()
 {
     //system("cls");
+    readFromFile();
+    // printf("%s",records[0].name);
     login();
     mainMenu();
     return 0;
@@ -82,7 +87,7 @@ void mainMenu(){
     switch (input){
     
     case 1:
-        //generate_payment();
+        generate_payment();
         break;
     case 2:
         manageEmployees();
@@ -98,6 +103,7 @@ void mainMenu(){
         break;
     case 6:
         exit(0);
+        break;
     default:
         system("cls");
         printf("\n\tPlease enter a valid option!");
@@ -234,4 +240,68 @@ void editEmployee(){
     system("cls");
     printf("Enter the name of employee: ");
     searchEmployee();
+}
+void  generate_payment(){
+    system("cls");
+    int id_no,id;
+    FILE *fp,*fp1;
+    float amount,amount_after_tax;
+    here:
+    printf("\n\nInput the id no of the employee: ");
+    scanf("%d",&id_no);
+    for(int i=0;i<=no_of_records;i++){
+        if(id_no == records[i].id){
+            id = i;
+        }
+    }
+    if(id_no == records[id].id){
+        printf("\n\t\t\tThe payment will be generated to %s.",records[id].name);
+        printf("\n\nAre you sure you want to pay %s?\n1. Yes\n2. No\n",records[id].name);
+        scanf("%d",&id_no);
+        if(id_no == 1){
+            system("cls");
+            printf("\n\n\t\tPlease note that each time you generate an amount to the employee, amount will be paid by deducting certain tax.");
+            printf("\n\nEnter the amount: ");
+            scanf("%f",&amount);
+            // calculating the amount after tax 
+            amount_after_tax = amount - tax*amount;
+            records[id].salary += amount_after_tax;
+            // Animation(if not relevant we can delete this)
+            printf("\nProcessing");
+            Sleep(300);printf(".");
+            Sleep(300);printf(".");  
+            Sleep(300);printf(".");
+            Sleep(300);printf(".\n\n");
+            printf("The amount of sum %f has been generated to the employee after deducting certain tax.",amount_after_tax);
+            printf("\n\n\t\t\t\tUPDATED DETAILS...\n\n");
+            printf("\n\nName:%s\t\tID:%d\t\tSalary:%f",records[id].name,records[id].id,records[id].salary);
+            // Again opening file so to rewrite the updated details
+            fp = fopen("record.txt","r");
+            fflush(fp);
+            fclose(fp);
+            fp1 = fopen("record.txt","w");
+            // this section rewrite the updated details
+            for(int i=0;i<=no_of_records;i++){
+                fprintf(fp1, "%s\n", records[i].name);
+                fprintf(fp1, "%d\n", records[i].id);
+                fprintf(fp1, "%s\n",records[i].position);
+                fprintf(fp1, "%f\n", records[i].salary);
+                fprintf(fp1, "%s\n", records[i].phoneno);
+                fclose(fp1);
+
+            }
+            getch();
+        }
+        else if(id_no == 2){
+            goto here;
+        }
+        else{
+            printf("Invalid Input");
+            goto here;
+        }
+    }
+    else{
+        printf("\n\n\tWe could not found the details related to that ID Number.\n\tPlease enter ID Number again.");
+        goto here;
+    }
 }
