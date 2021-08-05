@@ -3,20 +3,11 @@
 #include<string.h>
 #include<stdlib.h>
 #include<conio.h>
-// I changed here 
-// and ankit changed here xD
-// Sulav commit here
-// nishit ko comment
-//aba chai push garna aayo
-//again push
-//last push
-//aba hunxa?
-//Pushed by avinav
 float interest_rate=0.06;
 void delay(){
     int i,j;
-    for(i=0;i<31567;i++){
-    for(j=0;j<31567;j++){}
+    for(i=0;i<25567;i++){
+    for(j=0;j<25567;j++){}
     }
 }
 void edit();
@@ -36,7 +27,7 @@ typedef struct
     float salary,interest;
 }detail;
 
-detail a[20];
+detail a[50];
 
 int main(){
     FILE *p;
