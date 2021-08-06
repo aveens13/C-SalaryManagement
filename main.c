@@ -238,10 +238,96 @@ void lowercase(char temp[]){
 
 //not completed but for editing employee data
 void editEmployee(){
+    FILE *fp,*fp1;
+    char change[20],temp;
+    int j,id_no;
+    int usr_choice;
     strcpy(name, "");
     system("cls");
-    printf("Enter the name of employee: ");
-    searchEmployee();
+    printf("Enter the id no of employee: ");
+    scanf("%d",&id_no);
+    for(int i=0;i<=no_of_records;i++){
+        if(id_no == records[i].id){
+            j = i;
+        }
+    }
+    system("cls");
+    printf("\n\t\tWhat do you want to edit for %s?",records[j].name);
+    printf("\n\n\t\t1.Position\n\t\t2.Phone Number\n");
+    scanf("%d",&usr_choice);
+    switch (usr_choice)
+    {
+    case 1:
+        system("cls");
+        printf("\n\t\tCurrent Position of %s is %s.",records[j].name,records[j].position);
+        printf("\n\nPlease enter the new position: ");
+        scanf("%c",&temp);
+        scanf("%[^\n]",change);
+        strcpy(records[j].position , change);
+        printf("\nProcessing");
+        Sleep(300);printf(".");
+        Sleep(300);printf(".");  
+        Sleep(300);printf(".");
+        Sleep(300);printf(".\n\n");
+        fp = fopen("record.txt","r");
+        fflush(fp);
+        fclose(fp);
+        fp1 = fopen("record.txt","w");
+        // this section rewrite the updated details
+        for(int i=0;i<no_of_records;i++){
+            fprintf(fp1, "%s\n", records[i].name);
+            fprintf(fp1, "%d\n", records[i].id);
+            fprintf(fp1, "%s\n",records[i].position);
+            fprintf(fp1, "%f\n", records[i].salary);
+            fprintf(fp1, "%s\n", records[i].phoneno);
+            
+        }
+        fclose(fp1);
+        printf("\n\n\t\tSucessfully changed the position for %s",records[j].name);
+        printf("\n\nEnter any key to go to main menu");
+        getch();
+        mainMenu();
+        break;
+    case 2:
+        system("cls");
+        printf("\n\t\tCurrent Phone Number of %s is %s.",records[j].name,records[j].phoneno);
+        printf("\n\nPlease enter the new Phone Number: ");
+        scanf("%c",&temp);
+        scanf("%[^\n]",change);
+        strcpy(records[j].phoneno , change);
+        printf("\nProcessing");
+        Sleep(300);printf(".");
+        Sleep(300);printf(".");  
+        Sleep(300);printf(".");
+        Sleep(300);printf(".\n\n");
+        fp = fopen("record.txt","r");
+        fflush(fp);
+        fclose(fp);
+        fp1 = fopen("record.txt","w");
+        // this section rewrite the updated details
+        for(int i=0;i<no_of_records;i++){
+            fprintf(fp1, "%s\n", records[i].name);
+            fprintf(fp1, "%d\n", records[i].id);
+            fprintf(fp1, "%s\n",records[i].position);
+            fprintf(fp1, "%f\n", records[i].salary);
+            fprintf(fp1, "%s\n", records[i].phoneno);
+            
+        }
+        fclose(fp1);
+        printf("\n\n\t\tSucessfully changed the phone number of %s",records[j].name);
+        printf("\n\nEnter any key to go to main menu");
+        getch();
+        mainMenu();
+
+        break;
+    default:
+        printf("Invalid choice");
+        Sleep(1000);
+        editEmployee();
+        break;
+    }
+    
+    
 }
 void  generate_payment(){
     system("cls");
@@ -289,9 +375,8 @@ void  generate_payment(){
                 fprintf(fp1, "%s\n",records[i].position);
                 fprintf(fp1, "%f\n", records[i].salary);
                 fprintf(fp1, "%s\n", records[i].phoneno);
-                fclose(fp1);
-
             }
+            fclose(fp1);
             getch();
         }
         else if(id_no == 2){
@@ -361,8 +446,4 @@ void logs(){
     printf("Press any button to return to the main menu");
     getch();
     mainMenu();
-
-    
-
-
 }
