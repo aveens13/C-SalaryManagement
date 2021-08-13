@@ -32,7 +32,10 @@ void appendToFile(employee*);
 void readFromFile();
 void generate_payment();
 void searchEmployee();
+void removeEmployee();
+void removeEmployee1(int);
 void editEmployee();
+void info();
 void lowercase(char []);
 void logs();
 void gotoxy(int x, int y);
@@ -98,7 +101,7 @@ void mainMenu(){
         //edit_system();
         break;
     case 4:
-        //info();
+        info();
         break;
     case 5:
         logs();
@@ -141,7 +144,7 @@ void manageEmployees(){
         searchEmployee();
         break;
     case '4':
-        //removeEmployee();
+        removeEmployee();
     case '5':
         mainMenu();
         break;
@@ -203,7 +206,81 @@ void readFromFile(){
     no_of_records=i-1;
     fclose(f); 
 }
-
+// removing an employee
+void removeEmployee(){
+    int id_no,j=9999;
+    char usr_res;
+   system("cls");
+   printf("Enter the id no. of the employee: ");
+   scanf("%d",&id_no);
+   for(int i=0;i<=no_of_records;i++){
+        if(id_no == records[i].id){
+            j = i;
+        }
+    }
+    if(j!=9999){
+        printf("Do you want to remove %s from the employee records?",records[j].name);
+        usr_res = getch();
+        if(usr_res == 'y'){
+            removeEmployee1(j);}
+        else {
+            removeEmployee();}
+    }
+    else{
+        printf("We could not find the user with %d",id_no);
+        printf("Enter any key to repeat the process");getch();
+        removeEmployee();
+    }
+}
+void removeEmployee1(int id_no){
+    FILE *fp,*fp1;
+    printf("\nClearing User Info");
+    Sleep(300);printf(".");
+    Sleep(300);printf(".");  
+    Sleep(300);printf(".");
+    Sleep(300);printf(".\n\n");
+    fp = fopen("record.txt","r");
+    fflush(fp);
+    fclose(fp);
+    fp1 = fopen("record.txt","w");
+    // this section rewrite the updated details
+    for(int i=0;i<no_of_records;i++){
+        if(id_no!=i){
+            fprintf(fp1, "%s\n", records[i].name);
+            fprintf(fp1, "%d\n", records[i].id);
+            fprintf(fp1, "%s\n",records[i].position);
+            fprintf(fp1, "%f\n", records[i].salary);
+            fprintf(fp1, "%s\n", records[i].phoneno);
+        }    
+    }
+    fclose(fp1);
+}
+//information of a certain employee
+void info(){
+    int id_no,j=9999;
+    system("cls");
+    printf("\nProcessing");
+        Sleep(300);printf(".");
+        Sleep(300);printf(".");  
+        Sleep(300);printf(".");
+        Sleep(300);printf(".\n\n");
+    printf("Enter the id no of the employee: ");
+    scanf("%d",&id_no);
+    for(int i=0;i<=no_of_records;i++){
+        if(id_no == records[i].id){
+            j = i;
+        }
+    }
+    if(j!=9999){
+    printf("\t\t\tName: %s\n\n\t\t\tID number: %d\n\n\t\t\tPosition: %s\n\n\t\t\tPhone Number: %s\n\n\t\t\t",records[j].name,records[j].id,records[j].position,records[j].phoneno);
+    getch();}
+    else{
+        printf("\n\nWe cannot find the user.\n");
+        printf("\n\t\t\t\tPress any key\n");
+        getch();
+        info();
+    }
+}
 //for employee search by name (id not done yet)
 void searchEmployee(){
     char input = getch();

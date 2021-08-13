@@ -1,20 +1,10 @@
-Sulav Pokharel
-1111
-Manager
-900000.000000
-9830200201
-Ankit Dahal
+Avinva
 2222
-Deputy Manager
-696969.000000
-8888888888
-Avinav Bhattarai
+Manager
+5000.000000
+000000
+Ankit
 3333
-Deputy Manager
-420420.000000
-7777777777
-Nishit Thapa
-4444
-Deputy Manager
-696942.000000
-6666666666
+CEO
+3000.000000
+243232
