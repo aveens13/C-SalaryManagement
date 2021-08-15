@@ -27,24 +27,24 @@ int no_of_records;
 float tax = 0.13;
 sys det[2];
 //function declaration
-void login();
-void mainMenu();
-void manageEmployees();
-void addEmployees();
-void appendToFile(employee*);
-void readFromFile();
-void generate_payment();
-void searchEmployee();
-void removeEmployee();
-void removeEmployee1(int);
-void editEmployee();
-void edit_system();
-void writesysfile();
-void readsysfile();
-void info();
-void lowercase(char []);
-void logs();
-void gotoxy(int x, int y);
+void login();//Ankit
+void mainMenu();//Ankit
+void manageEmployees();//Ankit
+void addEmployees();//Ankit
+void appendToFile(employee*);//Ankit
+void readFromFile();//Ankit
+void generate_payment();//Avinav
+void searchEmployee();//Ankit
+void removeEmployee();//Avinav
+void removeEmployee1(int);//Avinav
+void editEmployee();//Avinav
+void edit_system();//Nishit
+void writesysfile();//Nishit
+void readsysfile();//Nishit
+void info();//Nishit
+void lowercase(char []);//Ankit
+void logs();//Sulav
+void gotoxy(int x, int y);//Sulav
 
 //main
 int main()
