@@ -405,7 +405,7 @@ void logs(){
     system("cls");
     gotoxy(30,4);
     printf("===================================================================================");
-    gotoxy(50,5);
+    gotoxy(45,5);
     printf("\xB2\xB2\xB2\xB2\xB2\xB2 EMPLOYEE SALARY MANAGEMENT (LOGS)\xB2\xB2\xB2\xB2\xB2\xB2");
     gotoxy(30,6);
     printf("===================================================================================");
@@ -434,7 +434,7 @@ void logs(){
 
     for(i=0;i<no_of_records;i++){
         gotoxy(3,(i+11));
-    printf("%-4d\t%-20s\t%-20s\t%-10s   %-.2f\t",records[i].id,records[i].name,records[i].position,records[i].phoneno,records[i].salary);
+    printf("%-4d   %-20s   %-20s\t%-10s   %-.2f\t",records[i].id,records[i].name,records[i].position,records[i].phoneno,records[i].salary);
 
     }
 
