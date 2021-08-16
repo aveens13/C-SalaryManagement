@@ -38,7 +38,7 @@ void manageEmployees();//Ankit (done)
 void addEmployees();//Ankit (done)
 void appendToFile(employee);//Ankit (done)
 void readFromFile();//Ankit (done)
-void generate_payment();//Avinav
+void generate_payment();//Ankit
 void searchEmployee();//Ankit 
 void removeEmployee();//Avinav
 void removeEmployee1(int);//Avinav
@@ -318,9 +318,9 @@ void writesysfile(){
     fclose(fp);
     fp=fopen("sys.txt","w");
     system("cls");
-    printf("\n\n\t\t\tEnter the new tax rate: ");
+    printf("\n\n\t\t\tEnter the new tax rate in percentage : ");
     scanf("%f",&det[0].tax);
-    printf("\n\n\t\t\tEnter the new Provident Fund percentage: ");
+    printf("\n\n\t\t\tEnter the new Provident Fund percentage : ");
     scanf("%f",&det[0].provident_fund);
     fprintf(fp,"%f",det[0].tax);
     fprintf(fp,"\n%f",det[0].provident_fund);
@@ -341,12 +341,15 @@ void info(){
     FILE *fp;
     fp=fopen("sys.txt","r");
     fscanf(fp,"%f",&num);//provident fund
-    per=num*100; //change into percentage
-    printf("\n\n\t\t\tThe current provident fund rate is %.2f%. \n", per);
+    per=num; //change into percentage
+    printf("\n\n\t\t\tThe current tax rate is %.2f%%. \n", per);
     fscanf(fp,"%f",&num);//Tax rate
-    per=num*100;
-    printf("\n\n\t\t\tThe current tax rate is %.2f%. \n", per);
+    per=num;
+    printf("\n\n\t\t\tThe current provident fund rate is %.2f%%. \n", per);
     fclose(fp);
+    printf("\n\n\t\t\tEnter any character to go to main menu...");
+    getch();
+    mainMenu();
 
 }
 //search employee
