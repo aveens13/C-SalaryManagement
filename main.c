@@ -336,29 +336,18 @@ void writesysfile(){
 
 //information of a certain employee
 void info(){
-    int id_no,j=9999;
     system("cls");
-    printf("\nProcessing");
-        Sleep(300);printf(".");
-        Sleep(300);printf(".");  
-        Sleep(300);printf(".");
-        Sleep(300);printf(".\n\n");
-    printf("Enter the id no of the employee: ");
-    scanf("%d",&id_no);
-    for(int i=0;i<=no_of_records;i++){
-        if(id_no == records[i].id){
-            j = i;
-        }
-    }
-    if(j!=9999){
-    printf("\n\t\t\tName: %s\n\n\t\t\tID number: %d\n\n\t\t\tPosition: %s\n\n\t\t\tPhone Number: %s\n\n\t\t\t",records[j].name,records[j].id,records[j].position,records[j].phoneno);
-    getch();}
-    else{
-        printf("\n\nWe cannot find the user.\n");
-        printf("\n\t\t\t\tPress any key\n");
-        getch();
-        info();
-    }
+    float num, per;
+    FILE *fp;
+    fp=fopen("sys.txt","r");
+    fscanf(fp,"%f",&num);//provident fund
+    per=num*100; //change into percentage
+    printf("\n\n\t\t\tThe current provident fund rate is %.2f%. \n", per);
+    fscanf(fp,"%f",&num);//Tax rate
+    per=num*100;
+    printf("\n\n\t\t\tThe current tax rate is %.2f%. \n", per);
+    fclose(fp);
+
 }
 //search employee
 void searchEmployee(){
@@ -397,9 +386,10 @@ void lowercase(char temp[]){
 
 //not completed but for editing employee data
 void editEmployee(){
-    FILE *fp,*fp1;
+FILE *fp,*fp1;
     char change[20],temp;
     int j,id_no;
+    int idd;
     int usr_choice;
     strcpy(name, "");
     system("cls");
@@ -412,7 +402,7 @@ void editEmployee(){
     }
     system("cls");
     printf("\n\t\tWhat do you want to edit for %s?",records[j].name);
-    printf("\n\n\t\t1.Position\n\t\t2.Phone Number\n");
+    printf("\n\n\t\t1.Position\n\t\t2.Phone Number\n\t\t3.Name\n\t\t4.Id Number\n");
     scanf("%d",&usr_choice);
     switch (usr_choice)
     {
@@ -474,6 +464,72 @@ void editEmployee(){
         }
         fclose(fp1);
         printf("\n\n\t\tSucessfully changed the phone number of %s",records[j].name);
+        printf("\n\nEnter any key to go to main menu");
+        getch();
+        mainMenu();
+
+        break;
+    case 3:
+        system("cls");
+        printf("\n\t\tCurrent Name is %s.",records[j].name);
+        printf("\n\nPlease enter the new Name: ");
+        scanf("%c",&temp);
+        scanf("%[^\n]",change);
+        strcpy(records[j].name , change);
+        printf("\nProcessing");
+        Sleep(300);printf(".");
+        Sleep(300);printf(".");  
+        Sleep(300);printf(".");
+        Sleep(300);printf(".\n\n");
+        fp = fopen("record.txt","r");
+        fflush(fp);
+        fclose(fp);
+        fp1 = fopen("record.txt","w");
+        // this section rewrite the updated details
+        for(int i=0;i<no_of_records;i++){
+            fprintf(fp1, "%s\n", records[i].name);
+            fprintf(fp1, "%d\n", records[i].id);
+            fprintf(fp1, "%s\n",records[i].position);
+            fprintf(fp1, "%f\n", records[i].salary);
+            fprintf(fp1, "%s\n", records[i].phoneno);
+            
+        }
+        fclose(fp1);
+        printf("\n\n\t\tSucessfully changed the name as %s",records[j].name);
+        printf("\n\nEnter any key to go to main menu");
+        getch();
+        mainMenu();
+
+        break;
+    case 4:
+        
+        system("cls");
+        printf("\n\t\tCurrent Id Number of %s is %d.",records[j].name,records[j].id);
+        printf("\n\nPlease enter the new ID Number: ");
+        scanf("%d",&idd);
+        // scanf("%[^\n]",change);
+        // strcpy(records[j].phoneno , change);
+        records[j].id = idd;
+        printf("\nProcessing");
+        Sleep(300);printf(".");
+        Sleep(300);printf(".");  
+        Sleep(300);printf(".");
+        Sleep(300);printf(".\n\n");
+        fp = fopen("record.txt","r");
+        fflush(fp);
+        fclose(fp);
+        fp1 = fopen("record.txt","w");
+        // this section rewrite the updated details
+        for(int i=0;i<no_of_records;i++){
+            fprintf(fp1, "%s\n", records[i].name);
+            fprintf(fp1, "%d\n", records[i].id);
+            fprintf(fp1, "%s\n",records[i].position);
+            fprintf(fp1, "%f\n", records[i].salary);
+            fprintf(fp1, "%s\n", records[i].phoneno);
+            
+        }
+        fclose(fp1);
+        printf("\n\n\t\tSucessfully changed the Id number of %s",records[j].name);
         printf("\n\nEnter any key to go to main menu");
         getch();
         mainMenu();
