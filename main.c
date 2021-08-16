@@ -38,14 +38,13 @@ void manageEmployees();//Ankit (done)
 void addEmployees();//Ankit (done)
 void appendToFile(employee);//Ankit (done)
 void readFromFile();//Ankit (done)
-void generate_payment();//Avinav
+void generate_payment();//Ankit
 void searchEmployee();//Ankit 
 void removeEmployee();//Avinav
 void removeEmployee1(int);//Avinav
 void editEmployee();//Avinav
 void edit_system();//Nishit
 void writesysfile();//Nishit
-void readsysfile();//Nishit
 void info();//Nishit
 void lowercase(char []);//Ankit (done)
 void logs();//Sulav
@@ -318,9 +317,9 @@ void writesysfile(){
     fclose(fp);
     fp=fopen("sys.txt","w");
     system("cls");
-    printf("\n\n\t\t\tEnter the new tax rate: ");
+    printf("\n\n\t\t\tEnter the new tax rate in percentage : ");
     scanf("%f",&det[0].tax);
-    printf("\n\n\t\t\tEnter the new Provident Fund percentage: ");
+    printf("\n\n\t\t\tEnter the new Provident Fund percentage : ");
     scanf("%f",&det[0].provident_fund);
     fprintf(fp,"%f",det[0].tax);
     fprintf(fp,"\n%f",det[0].provident_fund);
@@ -341,12 +340,13 @@ void info(){
     FILE *fp;
     fp=fopen("sys.txt","r");
     fscanf(fp,"%f",&num);//provident fund
-    per=num*100; //change into percentage
-    printf("\n\n\t\t\tThe current provident fund rate is %.2f%. \n", per);
+    printf("\n\n\t\t\tThe current tax rate is %.2f%%. \n", num);
     fscanf(fp,"%f",&num);//Tax rate
-    per=num*100;
-    printf("\n\n\t\t\tThe current tax rate is %.2f%. \n", per);
+    printf("\n\n\t\t\tThe current provident fund rate is %.2f%%. \n", num);
     fclose(fp);
+    printf("\n\n\t\t\tEnter any character to go to main menu...");
+    getch();
+    mainMenu();
 
 }
 //search employee
@@ -698,37 +698,29 @@ void logs(){
     printf("\xB2\xB2\xB2\xB2\xB2\xB2 EMPLOYEE SALARY MANAGEMENT (LOGS)\xB2\xB2\xB2\xB2\xB2\xB2");
     gotoxy(30,6);
     printf("===================================================================================");
-    gotoxy(3,8);
-    printf("==================================================================================================================================");
-    gotoxy(3,9);
+    gotoxy(30,8);
+    printf("=======================================================================================");
+    gotoxy(30,9);
     printf("ID");
-    gotoxy(10,9);
+    gotoxy(37,9);
     printf("NAME");
-    gotoxy(33,9);
+    gotoxy(60,9);
     printf("POSITION");
-    gotoxy(56,9);
+    gotoxy(83,9);
     printf("PHONE NO.");
-    gotoxy(69,9);
+    gotoxy(106,9);
     printf("SALARY");
-    gotoxy(81,9);
-    printf("BONUS");
-    gotoxy(89,9);
-    printf("TAX");
-    gotoxy(97,9);
-    printf("DEDUCTIONS");
-    gotoxy(110,9);
-    printf("NET EARNING");
-    gotoxy(3,10);
-    printf("==================================================================================================================================");
+    gotoxy(30,10);
+    printf("=======================================================================================");
 
     for(i=0;i<no_of_records;i++){
-        gotoxy(3,(i+11));
-    printf("%-4d   %-20s   %-20s\t%-10s   %-.2f\t",records[i].id,records[i].name,records[i].position,records[i].phoneno,records[i].salary);
+        gotoxy(30,(i+11));
+    printf("%-4d   %-20s   %-20s   %-20s   %-.2f\t",records[i].id,records[i].name,records[i].position,records[i].phoneno,records[i].salary);
 
     }
 
-    gotoxy(3,(i+11));
-    printf("==================================================================================================================================\n\n");
+    gotoxy(30,(i+11));
+    printf("=======================================================================================\n\n");
 
     printf("\tTOTAL NO. OF EMPLOYEE=%d\n",no_of_records);
     gotoxy(50,(i+15));
