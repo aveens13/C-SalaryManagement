@@ -45,7 +45,6 @@ void removeEmployee1(int);//Avinav
 void editEmployee();//Avinav
 void edit_system();//Nishit
 void writesysfile();//Nishit
-void readsysfile();//Nishit
 void info();//Nishit
 void lowercase(char []);//Ankit (done)
 void logs();//Sulav
@@ -341,11 +340,9 @@ void info(){
     FILE *fp;
     fp=fopen("sys.txt","r");
     fscanf(fp,"%f",&num);//provident fund
-    per=num; //change into percentage
-    printf("\n\n\t\t\tThe current tax rate is %.2f%%. \n", per);
+    printf("\n\n\t\t\tThe current tax rate is %.2f%%. \n", num);
     fscanf(fp,"%f",&num);//Tax rate
-    per=num;
-    printf("\n\n\t\t\tThe current provident fund rate is %.2f%%. \n", per);
+    printf("\n\n\t\t\tThe current provident fund rate is %.2f%%. \n", num);
     fclose(fp);
     printf("\n\n\t\t\tEnter any character to go to main menu...");
     getch();
