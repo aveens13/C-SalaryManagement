@@ -317,9 +317,9 @@ void readsysfile(){
     fscanf(fp,"%f",&det[1].provident_fund);
     fscanf(fp,"%f",&det[1].tax);
 }
-//information about the tax and provident fund rates
+//information of a certain employee
 void info(){
-    system("CLS");
+      system("CLS");
     char rate[10];
     float num, per;
     FILE *fp;
@@ -333,6 +333,7 @@ void info(){
     per=num*100;
     printf("The current tax rate is %2.f%. \n", per);
     fclose(fp);
+
 }
 //for employee search by name (id not done yet)
 void searchEmployee(){
@@ -470,6 +471,7 @@ void  generate_payment(){
     for(int i=0;i<=no_of_records;i++){
         if(id_no == records[i].id){
             id = i;
+            break;
         }
     }
     if(id_no == records[id].id){
@@ -508,7 +510,9 @@ void  generate_payment(){
                 fprintf(fp1, "%s\n", records[i].phoneno);
             }
             fclose(fp1);
+            printf("Enter any key to go to main menu.");
             getch();
+            mainMenu();
         }
         else if(id_no == 2){
             goto here;
