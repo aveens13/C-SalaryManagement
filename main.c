@@ -27,24 +27,24 @@ int no_of_records;
 float tax = 0.13;
 sys det[2];
 //function declaration
-void login();
-void mainMenu();
-void manageEmployees();
-void addEmployees();
-void appendToFile(employee*);
-void readFromFile();
-void generate_payment();
-void searchEmployee();
-void removeEmployee();
-void removeEmployee1(int);
-void editEmployee();
-void edit_system();
-void writesysfile();
-void readsysfile();
-void info();
-void lowercase(char []);
-void logs();
-void gotoxy(int x, int y);
+void login();//Ankit
+void mainMenu();//Ankit
+void manageEmployees();//Ankit
+void addEmployees();//Ankit
+void appendToFile(employee*);//Ankit
+void readFromFile();//Ankit
+void generate_payment();//Avinav
+void searchEmployee();//Ankit
+void removeEmployee();//Avinav
+void removeEmployee1(int);//Avinav
+void editEmployee();//Avinav
+void edit_system();//Nishit
+void writesysfile();//Nishit
+void readsysfile();//Nishit
+void info();//Nishit
+void lowercase(char []);//Ankit
+void logs();//Sulav
+void gotoxy(int x, int y);//Sulav
 
 //main
 int main()
@@ -317,31 +317,22 @@ void readsysfile(){
     fscanf(fp,"%f",&det[1].provident_fund);
     fscanf(fp,"%f",&det[1].tax);
 }
-//information of a certain employee
+//information about the tax and provident fund rates
 void info(){
-    int id_no,j=9999;
-    system("cls");
-    printf("\nProcessing");
-        Sleep(300);printf(".");
-        Sleep(300);printf(".");  
-        Sleep(300);printf(".");
-        Sleep(300);printf(".\n\n");
-    printf("Enter the id no of the employee: ");
-    scanf("%d",&id_no);
-    for(int i=0;i<=no_of_records;i++){
-        if(id_no == records[i].id){
-            j = i;
-        }
-    }
-    if(j!=9999){
-    printf("\n\t\t\tName: %s\n\n\t\t\tID number: %d\n\n\t\t\tPosition: %s\n\n\t\t\tPhone Number: %s\n\n\t\t\t",records[j].name,records[j].id,records[j].position,records[j].phoneno);
-    getch();}
-    else{
-        printf("\n\nWe cannot find the user.\n");
-        printf("\n\t\t\t\tPress any key\n");
-        getch();
-        info();
-    }
+    system("CLS");
+    char rate[10];
+    float num, per;
+    FILE *fp;
+    fp=fopen("sys.txt","r");
+    fgets(rate, 10, fp);//provident fund
+    num=atof(rate); //change string from file into float
+    per=num*100; //change into percentage
+    printf("The current provident fund rate is %2.f%. \n", per);
+    fgets(rate, 10, fp);//tax rate
+    num=atof(rate);
+    per=num*100;
+    printf("The current tax rate is %2.f%. \n", per);
+    fclose(fp);
 }
 //for employee search by name (id not done yet)
 void searchEmployee(){
