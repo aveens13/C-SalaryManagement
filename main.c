@@ -14,7 +14,10 @@ typedef struct {
     float salary;
     char phoneno[10];
 } employee;
-
+typedef struct{
+    float provident_fund;
+    float tax;
+}sys;
 //global variables
 employee records[20];
 char name[20];
@@ -22,7 +25,7 @@ char real_username[20] = "admin"; //username
 char real_password[20] = "admin"; //password
 int no_of_records;
 float tax = 0.13;
-
+sys det[2];
 //function declaration
 void login();
 void mainMenu();
@@ -32,14 +35,21 @@ void appendToFile(employee*);
 void readFromFile();
 void generate_payment();
 void searchEmployee();
+void removeEmployee();
+void removeEmployee1(int);
 void editEmployee();
+void edit_system();
+void writesysfile();
+void readsysfile();
+void info();
 void lowercase(char []);
 void logs();
 void gotoxy(int x, int y);
 
 //main
 int main()
-{
+{    
+    readsysfile();
     //system("cls");
     readFromFile();
     // printf("%s",records[0].name);
@@ -95,10 +105,10 @@ void mainMenu(){
         manageEmployees();
         break;
     case 3:
-        //edit_system();
+        edit_system();
         break;
     case 4:
-        //info();
+        info();
         break;
     case 5:
         logs();
@@ -141,7 +151,7 @@ void manageEmployees(){
         searchEmployee();
         break;
     case '4':
-        //removeEmployee();
+        removeEmployee();
     case '5':
         mainMenu();
         break;
@@ -155,7 +165,7 @@ void manageEmployees(){
 void addEmployees() {
     employee new_record;
     char temp;
-    printf("Enter the name of employee: ");
+    printf("\n\nEnter the name of employee: ");
     scanf("%c", &temp);
     scanf("%[^\n]", new_record.name);
     printf("Enter the id: ");
@@ -203,7 +213,136 @@ void readFromFile(){
     no_of_records=i-1;
     fclose(f); 
 }
+// removing an employee
+void removeEmployee(){
+    int id_no,j=9999;
+    char usr_res;
+   system("cls");
+   printf("Enter the id no. of the employee: ");
+   scanf("%d",&id_no);
+   for(int i=0;i<=no_of_records;i++){
+        if(id_no == records[i].id){
+            j = i;
+        }
+    }
+    if(j!=9999){
+        printf("Do you want to remove %s from the employee records?",records[j].name);
+        usr_res = getch();
+        if(usr_res == 'y'){
+            removeEmployee1(j);}
+        else {
+            removeEmployee();}
+    }
+    else{
+        printf("We could not find the user with %d",id_no);
+        printf("Enter any key to repeat the process");getch();
+        removeEmployee();
+    }
+}
+void removeEmployee1(int id_no){
+    FILE *fp,*fp1;
+    printf("\nClearing User Info");
+    Sleep(300);printf(".");
+    Sleep(300);printf(".");  
+    Sleep(300);printf(".");
+    Sleep(300);printf(".\n\n");
+    fp = fopen("record.txt","r");
+    fflush(fp);
+    fclose(fp);
+    fp1 = fopen("record.txt","w");
+    // this section rewrite the updated details
+    for(int i=0;i<no_of_records;i++){
+        if(i!=id_no){
+            fprintf(fp1, "%s\n", records[i].name);
+            fprintf(fp1, "%d\n", records[i].id);
+            fprintf(fp1, "%s\n",records[i].position);
+            fprintf(fp1, "%f\n", records[i].salary);
+            fprintf(fp1, "%s\n", records[i].phoneno);
+        }    
+    }
+    fclose(fp1);
+}
+// system edit
+void edit_system(){
+    char password[20];int i=0;
+    printf("\nProcessing");
+    Sleep(300);printf(".");
+    Sleep(300);printf(".");  
+    Sleep(300);printf(".");
+    Sleep(300);printf(".\n\n");
+    for(int j=3;j>0;j--){
+        system("cls");
+        printf("\n\n\t\tYou are accessing the admin-panel, you are required to enter the password again.");
+        printf("\n\n\t\t\t\tPassword: ");
+        do{
+            password[i] = getch();
+            if(password[i] != 13) printf("*");
+            i++;
+        }
+        while(password[i-1] != 13 );
+        password[i-1] = '\0';
+        if(strcmp(password,real_password)==0){
+            system("cls");
+            writesysfile();
+            break;
+        }
+        else{
+            printf("\n\nYou have provided the wrong password");
+            printf("\n\n\t\t\tEnter any key to try again");
+            printf("\n\n\t\t\tYou have %d tries left",j-1);
+            getch();
+        }
+    }
 
+}
+void writesysfile(){
+    FILE *fp;
+    fp =fopen("sys.txt","r");
+    fflush(fp);
+    fclose(fp);
+    fp=fopen("sys.txt","w");
+    system("cls");
+    printf("\n\n\t\t\tEnter the new tax rate: ");
+    scanf("%f",&det[0].tax);
+    printf("\n\n\t\t\tEnter the percentage of Provident fund to be deducted: ");
+    scanf("%f",&det[0].provident_fund);
+    fprintf(fp,"%f",det[0].provident_fund);
+    fprintf(fp,"\n%f",det[0].tax);
+    fclose(fp);
+    readsysfile();
+}
+void readsysfile(){
+    FILE *fp;
+    fp = fopen("sys.txt","r");
+    fscanf(fp,"%f",&det[1].provident_fund);
+    fscanf(fp,"%f",&det[1].tax);
+}
+//information of a certain employee
+void info(){
+    int id_no,j=9999;
+    system("cls");
+    printf("\nProcessing");
+        Sleep(300);printf(".");
+        Sleep(300);printf(".");  
+        Sleep(300);printf(".");
+        Sleep(300);printf(".\n\n");
+    printf("Enter the id no of the employee: ");
+    scanf("%d",&id_no);
+    for(int i=0;i<=no_of_records;i++){
+        if(id_no == records[i].id){
+            j = i;
+        }
+    }
+    if(j!=9999){
+    printf("\n\t\t\tName: %s\n\n\t\t\tID number: %d\n\n\t\t\tPosition: %s\n\n\t\t\tPhone Number: %s\n\n\t\t\t",records[j].name,records[j].id,records[j].position,records[j].phoneno);
+    getch();}
+    else{
+        printf("\n\nWe cannot find the user.\n");
+        printf("\n\t\t\t\tPress any key\n");
+        getch();
+        info();
+    }
+}
 //for employee search by name (id not done yet)
 void searchEmployee(){
     char input = getch();
@@ -333,7 +472,7 @@ void  generate_payment(){
     system("cls");
     int id_no,id;
     FILE *fp,*fp1;
-    float amount,amount_after_tax;
+    float amount,amount_after_tax,amount_after_pf;
     here:
     printf("\n\nInput the id no of the employee: ");
     scanf("%d",&id_no);
@@ -348,19 +487,20 @@ void  generate_payment(){
         scanf("%d",&id_no);
         if(id_no == 1){
             system("cls");
-            printf("\n\n\t\tPlease note that each time you generate an amount to the employee, amount will be paid by deducting certain tax.");
+            printf("\n\n\t\tPlease note that each time you generate an amount to the employee, amount will be paid by deducting certain tax and certain percentage goes to Provident Fund.");
             printf("\n\nEnter the amount: ");
             scanf("%f",&amount);
             // calculating the amount after tax 
-            amount_after_tax = amount - tax*amount;
-            records[id].salary += amount_after_tax;
+            amount_after_tax = amount - det[1].tax*amount;
+            amount_after_pf = amount_after_tax - det[1].provident_fund*amount_after_tax;
+            records[id].salary += amount_after_pf;
             // Animation(if not relevant we can delete this)
             printf("\nProcessing");
             Sleep(300);printf(".");
             Sleep(300);printf(".");  
             Sleep(300);printf(".");
             Sleep(300);printf(".\n\n");
-            printf("The amount of sum %f has been generated to the employee after deducting certain tax.",amount_after_tax);
+            printf("The amount of sum %f has been generated to the employee after deducting certain tax and some percentage of the amount was updated as Provident fund.",amount_after_pf);
             printf("\n\n\t\t\t\tUPDATED DETAILS...\n\n");
             printf("\n\nName:%s\t\tID:%d\t\tSalary:%f",records[id].name,records[id].id,records[id].salary);
             // Again opening file so to rewrite the updated details
