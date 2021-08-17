@@ -1,5 +1,5 @@
 #include <stdio.h>
-//#include <stdlib.h>
+#include <stdlib.h>
 #include <string.h>
 #include <conio.h>
 #include <windows.h>
@@ -28,38 +28,35 @@ char real_username[20] = "admin"; //username
 char real_password[20] = "admin"; //password
 int no_of_records;
 
-//float tax = 0.13;
 sys det[2];
 
 //function declaration
-void login();//Ankit (done)
-void mainMenu();//Ankit (done)
-void manageEmployees();//Ankit (done)
-void addEmployees();//Ankit (done)
-void appendToFile(employee);//Ankit (done)
-void readFromFile();//Ankit (done)
-void generate_payment();//Ankit (done)
-void searchEmployee();//Ankit (done)
-void removeEmployee();//Avinav
-void removeEmployee1(int);//Avinav
-void editEmployee();//Avinav
-void edit_system();//Nishit
-void writesysfile();//Nishit
-void info();//Nishit
-void lowercase(char []);//Ankit (done)
-void logs();//Sulav
-void gotoxy(int x, int y);//Sulav
-void printPaySlip(int); //Ankit (done)
-void displayDetails(int); //Ankit (done)
+void login();
+void mainMenu();
+void manageEmployees();
+void addEmployees();
+void appendToFile(employee);
+void readFromFile();
+void generate_payment();
+void searchEmployee();
+void removeEmployee();
+void removeEmployee1(int);
+void editEmployee();
+void edit_system();
+void writesysfile();
+void info();
+void lowercase(char []);
+void logs();
+void gotoxy(int x, int y);
+void printPaySlip(int);
+void displayDetails(int);
 
 //main
 int main()
 {    
     color_init();
-    //readsysfile();
-    //system("cls");
     readFromFile();
-    // printf("%s",records[0].name);
+    system("cls");
     login();
     mainMenu();
     return 0;
@@ -68,7 +65,6 @@ int main()
 //login page
 void login(){
     char username[20], password[20], input;
-
     fg_color(COLOR_GREEN | COLOR_BRIGHT);
     printf("\n\n\n\t\t\tUsername: ");
     color_reset();
@@ -180,7 +176,7 @@ void manageEmployees(){
         strcpy(name, "");
         system("cls");
         fg_color(COLOR_YELLOW | COLOR_BRIGHT);
-        printf("\tEnter the name of employee: ");
+        printf("\tEnter the detail of employee: ");
         color_reset();
         searchEmployee();
         break;
@@ -383,13 +379,6 @@ void writesysfile(){
     fclose(fp);
 }
 
-/*void readsysfile(){`
-    FILE *fp;
-    fp = fopen("sys.txt","r");
-    fscanf(fp,"%f",&det[1].tax);
-    fscanf(fp,"%f",&det[1].provident_fund);
-}*/
-
 //information of a certain employee
 void info(){
     system("cls");
@@ -420,7 +409,7 @@ void searchEmployee(){
     }
     system("cls");
     fg_color(COLOR_YELLOW | COLOR_BRIGHT);
-    printf("\tEnter the name of employee: ");
+    printf("\tEnter the detail of employee: ");
     color_reset();
     printf("%s\n\n", name);
     fg_color(COLOR_GREEN | COLOR_BRIGHT);
@@ -445,14 +434,14 @@ void searchEmployee(){
     searchEmployee();
 }
 
-//to convert a whole string to lowercase
+//To convert a string into lower case
 void lowercase(char temp[]){
     for (int i=0; i<strlen(temp); i++){
         temp[i]=tolower(temp[i]);
     }
 }
 
-//not completed but for editing employee data
+//To edit employee data
 void editEmployee(){
 FILE *fp,*fp1;
     char change[20],temp;
@@ -502,7 +491,7 @@ FILE *fp,*fp1;
         fflush(fp);
         fclose(fp);
         fp1 = fopen("record.txt","w");
-        // this section rewrite the updated details
+        // this section rewrites the updated details
         for(int i=0;i<no_of_records;i++){
             fprintf(fp1, "%s\n", records[i].name);
             fprintf(fp1, "%d\n", records[i].id);
@@ -541,7 +530,7 @@ FILE *fp,*fp1;
         fflush(fp);
         fclose(fp);
         fp1 = fopen("record.txt","w");
-        // this section rewrite the updated details
+        // this section rewrites the updated details
         for(int i=0;i<no_of_records;i++){
             fprintf(fp1, "%s\n", records[i].name);
             fprintf(fp1, "%d\n", records[i].id);
@@ -581,7 +570,7 @@ FILE *fp,*fp1;
         fflush(fp);
         fclose(fp);
         fp1 = fopen("record.txt","w");
-        // this section rewrite the updated details
+        // this section rewrites the updated details
         for(int i=0;i<no_of_records;i++){
             fprintf(fp1, "%s\n", records[i].name);
             fprintf(fp1, "%d\n", records[i].id);
@@ -609,8 +598,6 @@ FILE *fp,*fp1;
         printf("\n\nPlease enter the new ID Number: ");
         color_reset();
         scanf("%d",&idd);
-        // scanf("%[^\n]",change);
-        // strcpy(records[j].phoneno , change);
         records[j].id = idd;
         fg_color(COLOR_CYAN | COLOR_BRIGHT);
         printf("\nProcessing");
@@ -623,7 +610,7 @@ FILE *fp,*fp1;
         fflush(fp);
         fclose(fp);
         fp1 = fopen("record.txt","w");
-        // this section rewrite the updated details
+        // this section rewrites the updated details
         for(int i=0;i<no_of_records;i++){
             fprintf(fp1, "%s\n", records[i].name);
             fprintf(fp1, "%d\n", records[i].id);
@@ -654,71 +641,6 @@ FILE *fp,*fp1;
     
     
 }
-/*void  generate_payment(){
-    system("cls");
-    int id_no,id;
-    FILE *fp,*fp1;
-    float amount,amount_after_tax,amount_after_pf;
-    here:
-    printf("\n\nInput the id no of the employee: ");
-    scanf("%d",&id_no);
-    for(int i=0;i<=no_of_records;i++){
-        if(id_no == records[i].id){
-            id = i;
-        }
-    }
-    if(id_no == records[id].id){
-        printf("\n\t\t\tThe payment will be generated to %s.",records[id].name);
-        printf("\n\nAre you sure you want to pay %s?\n1. Yes\n2. No\n",records[id].name);
-        scanf("%d",&id_no);
-        if(id_no == 1){
-            system("cls");
-            printf("\n\n\t\tPlease note that each time you generate an amount to the employee, amount will be paid by deducting certain tax and certain percentage goes to Provident Fund.");
-            printf("\n\nEnter the amount: ");
-            scanf("%f",&amount);
-            // calculating the amount after tax 
-            amount_after_tax = amount - det[1].tax*amount;
-            amount_after_pf = amount_after_tax - det[1].provident_fund*amount_after_tax;
-            records[id].salary += amount_after_pf;
-            // Animation(if not relevant we can delete this)
-            printf("\nProcessing");
-            Sleep(300);printf(".");
-            Sleep(300);printf(".");  
-            Sleep(300);printf(".");
-            Sleep(300);printf(".\n\n");
-            printf("The amount of sum %f has been generated to the employee after deducting certain tax and some percentage of the amount was updated as Provident fund.",amount_after_pf);
-            printf("\n\n\t\t\t\tUPDATED DETAILS...\n\n");
-            printf("\n\nName:%s\t\tID:%d\t\tSalary:%f",records[id].name,records[id].id,records[id].salary);
-            // Again opening file so to rewrite the updated details
-            fp = fopen("record.txt","r");
-            fflush(fp);
-            fclose(fp);
-            fp1 = fopen("record.txt","w");
-            // this section rewrite the updated details
-            for(int i=0;i<=no_of_records;i++){
-                fprintf(fp1, "%s\n", records[i].name);
-                fprintf(fp1, "%d\n", records[i].id);
-                fprintf(fp1, "%s\n",records[i].position);
-                fprintf(fp1, "%f\n", records[i].salary);
-                fprintf(fp1, "%s\n", records[i].phoneno);
-            }
-            fclose(fp1);
-            getch();
-        }
-        else if(id_no == 2){
-            goto here;
-        }
-        else{
-            printf("Invalid Input");
-            goto here;
-        }
-    }
-    else{
-        printf("\n\n\tWe could not found the details related to that ID Number.\n\tPlease enter ID Number again.");
-        goto here;
-    }
-}
-*/
 
 void generate_payment(){
     int id, done_id;
