@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <conio.h>
 #include <windows.h>
 #include <ctype.h>
+#include "color.h"
 
 //structure definition
 typedef struct {
@@ -38,8 +38,8 @@ void manageEmployees();//Ankit (done)
 void addEmployees();//Ankit (done)
 void appendToFile(employee);//Ankit (done)
 void readFromFile();//Ankit (done)
-void generate_payment();//Ankit
-void searchEmployee();//Ankit 
+void generate_payment();//Ankit (done)
+void searchEmployee();//Ankit (done)
 void removeEmployee();//Avinav
 void removeEmployee1(int);//Avinav
 void editEmployee();//Avinav
@@ -49,12 +49,13 @@ void info();//Nishit
 void lowercase(char []);//Ankit (done)
 void logs();//Sulav
 void gotoxy(int x, int y);//Sulav
-void printPaySlip(int); //Ankit
-void displayDetails(int); //Ankit
+void printPaySlip(int); //Ankit (done)
+void displayDetails(int); //Ankit (done)
 
 //main
 int main()
 {    
+    color_init();
     //readsysfile();
     //system("cls");
     readFromFile();
@@ -67,9 +68,17 @@ int main()
 //login page
 void login(){
     char username[20], password[20], input;
+
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
     printf("\n\n\n\t\t\tUsername: ");
+    color_reset();
+
     scanf("%s", username);
+    
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
     printf("\n\t\t\tPassword: ");
+    color_reset();
+    
     int i=0, value1, value2;
     do{
         password[i] = getch();
@@ -84,7 +93,9 @@ void login(){
         mainMenu();
     }else{
         system("cls");
+        fg_color(COLOR_RED | COLOR_BRIGHT);
         printf("\n\t\t\tInvalid Username or Password!");
+        color_reset();
         login();
     }
     
@@ -95,14 +106,21 @@ void mainMenu(){
     int input;
     system("cls");
     printf("\n\n\n\n");
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("\t\t1. Generate Payment\n");
     printf("\t\t2. Manage Employees\n");
     printf("\t\t3. Edit the system\n");
     printf("\t\t4. Info\n");
     printf("\t\t5. Logs\n");
     printf("\t\t6. Exit\n");
+    color_reset();
+
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
     printf("\n\t\tInput: ");
+    color_reset();
+
     scanf("%d", &input);
+
     readFromFile(); //reading data from file
     switch (input){
     
@@ -138,12 +156,17 @@ void manageEmployees(){
     char input;
     system("cls");
     printf("\n\n\n\n");
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("\t\t1. Add an employee\n");
     printf("\t\t2. Edit an employee\n");
     printf("\t\t3. Search an employee\n");
     printf("\t\t4. Remove an employee\n");
     printf("\t\t5. Back to main menu\n");
+    color_reset();
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
     printf("\n\t\tInput: ");
+    color_reset();
+
     scanf("%s", &input);
 
     switch (input){
@@ -156,7 +179,9 @@ void manageEmployees(){
     case '3':
         strcpy(name, "");
         system("cls");
-        printf("Enter the name of employee: ");
+        fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+        printf("\tEnter the name of employee: ");
+        color_reset();
         searchEmployee();
         break;
     case '4':
@@ -176,20 +201,32 @@ void addEmployees() {
     char temp;
     char option;
     system("cls");
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("\n\nEnter the name of employee: ");
+    color_reset();
     scanf("%c", &temp);
     scanf("%[^\n]", new_record.name);
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("Enter the id: ");
+    color_reset();
     scanf("%d", &new_record.id);
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("Enter the position: ");
+    color_reset();
     scanf("%c", &temp);
     scanf("%[^\n]", new_record.position);
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("Enter the salary: ");
+    color_reset();
     scanf("%f", &new_record.salary);
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("Enter phone number: ");
+    color_reset();
     scanf("%s", new_record.phoneno);
     appendToFile(new_record); //adding the entered data to the file by calling another function
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
     printf("\nDo you want to add more? (y/n): ");
+    color_reset();
     scanf("%c", &temp);
     scanf("%c", &option);
     tolower(option);
@@ -232,7 +269,9 @@ void removeEmployee(){
     int id_no,j=9999;
     char usr_res;
    system("cls");
-   printf("Enter the id no. of the employee: ");
+   fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+   printf("\tEnter the id no. of the employee: ");
+   color_reset();
    scanf("%d",&id_no);
    for(int i=0;i<=no_of_records;i++){
         if(id_no == records[i].id){
@@ -240,7 +279,9 @@ void removeEmployee(){
         }
     }
     if(j!=9999){
-        printf("Do you want to remove %s from the employee records?",records[j].name);
+        fg_color(COLOR_GREEN | COLOR_BRIGHT);
+        printf("\tDo you want to remove %s from the employee records?(y/n) ",records[j].name);
+        color_reset();
         usr_res = getch();
         if(usr_res == 'y'){
             removeEmployee1(j);}
@@ -248,18 +289,22 @@ void removeEmployee(){
             removeEmployee();}
     }
     else{
-        printf("We could not find the user with %d",id_no);
-        printf("Enter any key to repeat the process");getch();
+        fg_color(COLOR_RED | COLOR_BRIGHT);
+        printf("\tWe could not find the user with %d",id_no);
+        printf("\tEnter any key to repeat the process");getch();
+        color_reset();
         removeEmployee();
     }
 }
 void removeEmployee1(int id_no){
     FILE *fp,*fp1;
-    printf("\nClearing User Info");
+    fg_color(COLOR_RED | COLOR_BRIGHT);
+    printf("\n\n\tClearing User Info");
     Sleep(300);printf(".");
     Sleep(300);printf(".");  
     Sleep(300);printf(".");
     Sleep(300);printf(".\n\n");
+    color_reset();
     fp = fopen("record.txt","r");
     fflush(fp);
     fclose(fp);
@@ -279,16 +324,22 @@ void removeEmployee1(int id_no){
 // system edit
 void edit_system(){
     char password[20];
-    printf("\nProcessing");
+    fg_color(COLOR_CYAN | COLOR_BRIGHT);
+    printf("\n\n\tProcessing");
     Sleep(300);printf(".");
     Sleep(300);printf(".");  
     Sleep(300);printf(".");
     Sleep(300);printf(".\n\n");
+    color_reset();
     for(int j=3;j>0;j--){
         int i = 0;
         system("cls");
+        fg_color(COLOR_YELLOW | COLOR_BRIGHT);
         printf("\n\n\t\tYou are accessing the admin-panel, you are required to enter the password again.");
+        color_reset();
+        fg_color(COLOR_GREEN | COLOR_BRIGHT);
         printf("\n\n\t\t\t\tPassword: ");
+        color_reset();
         do{
             password[i] = getch();
             if(password[i] != 13) printf("*");
@@ -302,10 +353,12 @@ void edit_system(){
             break;
         }
         else{
-            printf("\n\nYou have provided the wrong password");
-            printf("\n\n\t\t\tEnter any key to try again");
-            printf("\n\n\t\t\tYou have %d tries left",j-1);
+            fg_color(COLOR_RED | COLOR_BRIGHT);
+            printf("\n\n\t\tYou have provided the wrong password");
+            printf("\n\n\t\tEnter any key to try again");
+            printf("\n\n\t\tYou have %d tries left",j-1);
             getch();
+            color_reset();
         }
     }
 
@@ -317,9 +370,13 @@ void writesysfile(){
     fclose(fp);
     fp=fopen("sys.txt","w");
     system("cls");
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("\n\n\t\t\tEnter the new tax rate in percentage : ");
+    color_reset();
     scanf("%f",&det[0].tax);
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("\n\n\t\t\tEnter the new Provident Fund percentage : ");
+    color_reset();
     scanf("%f",&det[0].provident_fund);
     fprintf(fp,"%f",det[0].tax);
     fprintf(fp,"\n%f",det[0].provident_fund);
@@ -340,12 +397,16 @@ void info(){
     FILE *fp;
     fp=fopen("sys.txt","r");
     fscanf(fp,"%f",&num);//provident fund
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("\n\n\t\t\tThe current tax rate is %.2f%%. \n", num);
     fscanf(fp,"%f",&num);//Tax rate
     printf("\n\n\t\t\tThe current provident fund rate is %.2f%%. \n", num);
+    color_reset();
     fclose(fp);
+    fg_color(COLOR_GREEN |  COLOR_BRIGHT);
     printf("\n\n\t\t\tEnter any character to go to main menu...");
     getch();
+    color_reset();
     mainMenu();
 
 }
@@ -358,8 +419,13 @@ void searchEmployee(){
         strncat(name, &input, 1);
     }
     system("cls");
-    printf("Enter the name of employee: %s\n\n", name);
-    printf("\tID\t\tName\t\t\t\tPosition\t\t\tSalary\t\t\t\tPhone\n");
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf("\tEnter the name of employee: ");
+    color_reset();
+    printf("%s\n\n", name);
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("\tID\t\tName\t\t\t\tPosition\t\t\tSalary\t\t\t\tPhone\n\n");
+    color_reset();
     for (int i=0; i<no_of_records; i++){
         char temp[20], id_str[10], temp_position[20];
         strcpy(temp, records[i].name);
@@ -369,7 +435,9 @@ void searchEmployee(){
         lowercase(name);
         itoa(records[i].id, id_str, 10);
         if (strstr(temp, name) != NULL || strstr(id_str, name) != NULL || strstr(temp_position,name) != NULL){ 
-            printf("\t%d\t\t%-20s\t\t%-20s\t\t%-20.2f\t\t%-20s\n", records[i].id, records[i].name, records[i].position, records[i].salary, records[i].phoneno);
+            fg_color(COLOR_CYAN | COLOR_BRIGHT);        
+            printf("\t%d\t\t%-20s\t\t%-20s\t\t%-20.2f\t\t%-20s\n\n", records[i].id, records[i].name, records[i].position, records[i].salary, records[i].phoneno);
+            color_reset();
         }else if (strcmp(name, "quit") == 0){
             manageEmployees();
         }
@@ -393,7 +461,9 @@ FILE *fp,*fp1;
     int usr_choice;
     strcpy(name, "");
     system("cls");
-    printf("Enter the id no of employee: ");
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf("\n\tEnter the id no of employee: ");
+    color_reset();
     scanf("%d",&id_no);
     for(int i=0;i<=no_of_records;i++){
         if(id_no == records[i].id){
@@ -401,23 +471,33 @@ FILE *fp,*fp1;
         }
     }
     system("cls");
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
     printf("\n\t\tWhat do you want to edit for %s?",records[j].name);
+    color_reset();
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("\n\n\t\t1.Position\n\t\t2.Phone Number\n\t\t3.Name\n\t\t4.Id Number\n");
+    color_reset();
     scanf("%d",&usr_choice);
     switch (usr_choice)
     {
     case 1:
         system("cls");
+        fg_color(COLOR_YELLOW | COLOR_BRIGHT);
         printf("\n\t\tCurrent Position of %s is %s.",records[j].name,records[j].position);
+        color_reset();
+        fg_color(COLOR_GREEN | COLOR_BRIGHT);
         printf("\n\nPlease enter the new position: ");
+        color_reset();
         scanf("%c",&temp);
         scanf("%[^\n]",change);
         strcpy(records[j].position , change);
+        fg_color(COLOR_CYAN | COLOR_BRIGHT);
         printf("\nProcessing");
         Sleep(300);printf(".");
         Sleep(300);printf(".");  
         Sleep(300);printf(".");
         Sleep(300);printf(".\n\n");
+        color_reset();
         fp = fopen("record.txt","r");
         fflush(fp);
         fclose(fp);
@@ -432,23 +512,31 @@ FILE *fp,*fp1;
             
         }
         fclose(fp1);
+        fg_color(COLOR_YELLOW | COLOR_BRIGHT);
         printf("\n\n\t\tSucessfully changed the position for %s",records[j].name);
         printf("\n\nEnter any key to go to main menu");
+        color_reset();
         getch();
         mainMenu();
         break;
     case 2:
         system("cls");
+        fg_color(COLOR_YELLOW | COLOR_BRIGHT);
         printf("\n\t\tCurrent Phone Number of %s is %s.",records[j].name,records[j].phoneno);
+        color_reset();
+        fg_color(COLOR_GREEN | COLOR_BRIGHT);
         printf("\n\nPlease enter the new Phone Number: ");
+        color_reset();
         scanf("%c",&temp);
         scanf("%[^\n]",change);
         strcpy(records[j].phoneno , change);
+        fg_color(COLOR_CYAN | COLOR_BRIGHT);
         printf("\nProcessing");
         Sleep(300);printf(".");
         Sleep(300);printf(".");  
         Sleep(300);printf(".");
         Sleep(300);printf(".\n\n");
+        color_reset();
         fp = fopen("record.txt","r");
         fflush(fp);
         fclose(fp);
@@ -463,24 +551,32 @@ FILE *fp,*fp1;
             
         }
         fclose(fp1);
+        fg_color(COLOR_YELLOW | COLOR_BRIGHT);
         printf("\n\n\t\tSucessfully changed the phone number of %s",records[j].name);
         printf("\n\nEnter any key to go to main menu");
         getch();
+        color_reset();
         mainMenu();
 
         break;
     case 3:
         system("cls");
+        fg_color(COLOR_YELLOW | COLOR_BRIGHT);
         printf("\n\t\tCurrent Name is %s.",records[j].name);
+        color_reset();
+        fg_color(COLOR_GREEN | COLOR_BRIGHT);
         printf("\n\nPlease enter the new Name: ");
+        color_reset();
         scanf("%c",&temp);
         scanf("%[^\n]",change);
         strcpy(records[j].name , change);
+        fg_color(COLOR_CYAN | COLOR_BRIGHT);
         printf("\nProcessing");
         Sleep(300);printf(".");
         Sleep(300);printf(".");  
         Sleep(300);printf(".");
         Sleep(300);printf(".\n\n");
+        color_reset();
         fp = fopen("record.txt","r");
         fflush(fp);
         fclose(fp);
@@ -495,26 +591,34 @@ FILE *fp,*fp1;
             
         }
         fclose(fp1);
+        fg_color(COLOR_YELLOW | COLOR_BRIGHT);
         printf("\n\n\t\tSucessfully changed the name as %s",records[j].name);
         printf("\n\nEnter any key to go to main menu");
         getch();
+        color_reset();
         mainMenu();
 
         break;
     case 4:
         
         system("cls");
+        fg_color(COLOR_YELLOW | COLOR_BRIGHT);
         printf("\n\t\tCurrent Id Number of %s is %d.",records[j].name,records[j].id);
+        color_reset();    
+        fg_color(COLOR_GREEN | COLOR_BRIGHT);
         printf("\n\nPlease enter the new ID Number: ");
+        color_reset();
         scanf("%d",&idd);
         // scanf("%[^\n]",change);
         // strcpy(records[j].phoneno , change);
         records[j].id = idd;
+        fg_color(COLOR_CYAN | COLOR_BRIGHT);
         printf("\nProcessing");
         Sleep(300);printf(".");
         Sleep(300);printf(".");  
         Sleep(300);printf(".");
         Sleep(300);printf(".\n\n");
+        color_reset();
         fp = fopen("record.txt","r");
         fflush(fp);
         fclose(fp);
@@ -529,14 +633,20 @@ FILE *fp,*fp1;
             
         }
         fclose(fp1);
+        fg_color(COLOR_YELLOW | COLOR_BRIGHT);
         printf("\n\n\t\tSucessfully changed the Id number of %s",records[j].name);
+        color_reset();
+        fg_color(COLOR_CYAN | COLOR_BRIGHT);
         printf("\n\nEnter any key to go to main menu");
         getch();
+        color_reset();
         mainMenu();
 
         break;
     default:
+        fg_color(COLOR_RED | COLOR_BRIGHT);
         printf("Invalid choice");
+        color_reset();
         Sleep(1000);
         editEmployee();
         break;
@@ -614,21 +724,27 @@ void generate_payment(){
     int id, done_id;
     char choice;
     system("cls");
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("\n\t\tPlease enter id of the employee: ");
+    color_reset();
     scanf("%d", &id);
     for (int i=0; i<no_of_records; i++){
         if (id==records[i].id) {
             displayDetails(i);
-            printf("\n\n\t\tDo you want to pay %s? (y/n):", records[i].name);
+            fg_color(COLOR_GREEN | COLOR_BRIGHT);
+            printf("\n\n\t\tDo you want to pay %s? (y/n): ", records[i].name);
             choice = getch();
+            color_reset();
             if (choice =='y') {
                 FILE *f = fopen("deposit.txt", "r");
                 while (!feof(f)){
                     fscanf(f, "%d\n", &done_id);
                     if (done_id==id){
+                        fg_color(COLOR_RED | COLOR_BRIGHT);
                         printf("\n\n\t\tYou have already paid %s!", records[i].name);
                         printf("\n\n\t\tPress any button to continue...");
                         getch();
+                        color_reset();
                         mainMenu();
                     }
                 }
@@ -643,38 +759,107 @@ void generate_payment(){
 }
 
 void displayDetails(int i){
+    fg_color(COLOR_RED | COLOR_BRIGHT);
     printf("\n\n\t------------------------------------------------\n");
-    printf("\n\t\tName: %s\n", records[i].name);
-    printf("\n\t\tID: %d\n", records[i].id);
-    printf("\n\t\tPosition: %s\n", records[i].position);
-    printf("\n\t\tSalary: %.2f\n", records[i].salary);
-    printf("\n\t\tPhone Number: %s\n", records[i].phoneno);
+    color_reset();
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf("\n\t\tName: ");
+    color_reset();
+    printf("%s\n", records[i].name);
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf("\n\t\tID: ");
+    color_reset();
+    printf("%d\n", records[i].id);
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf("\n\t\tPosition: ");
+    color_reset();
+    printf("%s\n", records[i].position);
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf("\n\t\tSalary: ");
+    color_reset();
+    printf("%.2f\n", records[i].salary);
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf("\n\t\tPhone Number: ");
+    color_reset();
+    printf("%s\n", records[i].phoneno);
+    fg_color(COLOR_RED | COLOR_BRIGHT);
     printf("\n\t------------------------------------------------");
+    color_reset();
 }
 
 void printPaySlip(int i){
     float total, provident_fund, tax, bonus;
     char choice;
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf("\n\n\t\tAmount of Bonus: ");
+    color_reset();
+    scanf("%f", &bonus);
     FILE *f = fopen("sys.txt", "r");
     while (!feof(f)){
         fscanf(f, "%f\n", &tax);
         fscanf(f, "%f\n", &provident_fund);
     }
     fclose(f);
-    bonus = 10000;
     total = records[i].salary - (tax/100*records[i].salary) - (provident_fund/100*records[i].salary) + bonus;
     system("cls");
+    fg_color(COLOR_RED | COLOR_BRIGHT);
     printf("\n\n\t---------------------------------------------------------------------\n\n");
-    printf("\t\tName: %s\t\t\t\tID:%d\n\n\t\tSalary: Rs. %.2f\t\t\tTax: Rs. %.2f\n\n\t\tProvident Fund: Rs. %.2f\t\tBonus: Rs. %.2f\n\n\n\t\t\t\tTotal: Rs. %.2f", records[i].name, records[i].id, records[i].salary, (tax/100*records[i].salary), (provident_fund/100*records[i].salary), bonus, total);
+    color_reset();
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("\t\tName: ");
+    color_reset();
+    printf("%s\t\t\t\t", records[i].name);
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("ID: ");
+    color_reset();
+    printf("%d\n\n\t\t", records[i].id);
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("Salary: ");
+    color_reset();
+    printf("Rs. %.2f\t\t\t", records[i].salary);
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("Tax: ");
+    color_reset();
+    printf("Rs. %.2f\n\n\t\t",(tax/100*records[i].salary));
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("Provident Fund: ");
+    color_reset();
+    printf("Rs. %.2f\t\t", (provident_fund/100*records[i].salary));
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("Bonus: ");
+    color_reset();
+    printf("Rs. %.2f\n\n\n\t\t\t\t", bonus);
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("Total: ");
+    color_reset();
+    printf("Rs. %.2f",total); 
+    fg_color(COLOR_RED | COLOR_BRIGHT);
     printf("\n\n\t---------------------------------------------------------------------");
-    printf("\n\n\tDo you want to deposit Rs. %.2f to %s's account? (y/n): ", total, records[i].name);
+    color_reset();
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf("\n\n\tDo you want to deposit ");
+    color_reset();
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("Rs. %.2f", total);
+    color_reset();
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf(" to ");
+    color_reset();
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("%s", records[i].name);
+    color_reset();
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
+    printf("'s account? (y/n): ");
+    color_reset();
     choice = getch();
     if (choice=='y'){
         FILE *f = fopen("deposit.txt", "a");
         fprintf(f, "%d\n", records[i].id);
         fclose(f);
+        fg_color(COLOR_CYAN | COLOR_BRIGHT);
         printf("\n\n\tDone!\n");
         printf("\n\tPress any key to go back to Main Menu...");
+        color_reset();
         getch();
     }
     mainMenu();
@@ -695,12 +880,15 @@ void logs(){
     gotoxy(30,4);
     printf("===================================================================================");
     gotoxy(45,5);
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("\xB2\xB2\xB2\xB2\xB2\xB2 EMPLOYEE SALARY MANAGEMENT (LOGS)\xB2\xB2\xB2\xB2\xB2\xB2");
+    color_reset();
     gotoxy(30,6);
     printf("===================================================================================");
     gotoxy(30,8);
     printf("=======================================================================================");
     gotoxy(30,9);
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
     printf("ID");
     gotoxy(37,9);
     printf("NAME");
@@ -711,20 +899,25 @@ void logs(){
     gotoxy(106,9);
     printf("SALARY");
     gotoxy(30,10);
+    color_reset();
     printf("=======================================================================================");
 
     for(i=0;i<no_of_records;i++){
         gotoxy(30,(i+11));
+        fg_color(COLOR_CYAN | COLOR_BRIGHT);
     printf("%-4d   %-20s   %-20s   %-20s   %-.2f\t",records[i].id,records[i].name,records[i].position,records[i].phoneno,records[i].salary);
-
+        color_reset();
     }
 
     gotoxy(30,(i+11));
     printf("=======================================================================================\n\n");
-
-    printf("\tTOTAL NO. OF EMPLOYEE=%d\n",no_of_records);
+    fg_color(COLOR_GREEN | COLOR_BRIGHT);
+    printf("\t\t\t\tTOTAL NO. OF EMPLOYEES = %d\n",no_of_records);
     gotoxy(50,(i+15));
+    color_reset();
+    fg_color(COLOR_YELLOW | COLOR_BRIGHT);
     printf("Press any button to return to the main menu");
+    color_reset();
     getch();
     mainMenu();
 }
